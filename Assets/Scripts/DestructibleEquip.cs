@@ -10,10 +10,22 @@ public class DestructibleEquip :MonoBehaviour,IObservable,IGetEquipStatus
     [SerializeField] private float _hp;
     [SerializeField] private ushort _id;
 
+    //GameManagerから代入、プレイヤーが装備している武器を装備
+    static private GameObject _weaponObj;
+    static private Weapon _weapon;
+
     //GameManagerから代入、オブジェクトの状態を通知する
     static private IObserver[] _observers;
 
-    private bool isShattered=false;
+    /// <summary>
+    /// プレイヤーが装備中の武器を保持
+    /// </summary>
+    /// <param name="gameObject"></param>
+    public static void SetWeapon(GameObject gameObject)
+    {
+        _weaponObj = gameObject;
+        _weapon = _weaponObj.GetComponent<Weapon>();
+    }
 
     /// <summary>
     /// static配列にオブサーバーを登録
@@ -40,18 +52,25 @@ public class DestructibleEquip :MonoBehaviour,IObservable,IGetEquipStatus
        return new EquipStatus(_objectName, _price, _hp, _id);
     }
 
+    private void Damage(int attack)
+    {
+        _hp -= attack;
+    }
+
     void Start()
     {
         NotifyObserver();//テスト
     }
 
-    void Update()
-    {
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-
+    private void OnCollisionEnter(Collision collision)
+    { 
+        if (collision.gameObject==_weaponObj)
+        {
+            Damage(_weapon.GetAttack());
+            if (_hp <= 0)
+            {
+                NotifyObserver();
+            }
+        }
     }
 }

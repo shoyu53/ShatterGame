@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
             equipObservers[i] = _equipObserversObj[i].GetComponent<IObserver>();
         }
         DestructibleEquip.SetObservers(equipObservers);
+        //DestructibleEquip.SetWeapon();
     }
 
     void Update()
