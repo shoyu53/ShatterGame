@@ -9,11 +9,11 @@ using UnityEngine;
 public struct EquipStatus
 {
     public string _objectName;
-    public string _price;
-    public float _hp;
+    public int _price;
+    public int _hp;
     public ushort _id;
 
-    public EquipStatus(string name, string price, float hp, ushort id)
+    public EquipStatus(string name, int price, int hp, ushort id)
     {
         this._objectName = name;
         this._price = price;

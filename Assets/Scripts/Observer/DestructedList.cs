@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestructedObserver : MonoBehaviour,IObserver
+public class DestructedList : MonoBehaviour,IObserver
 {
     private List<DestructibleEquip> list;
     // Start is called before the first frame update
@@ -18,7 +18,7 @@ public class DestructedObserver : MonoBehaviour,IObserver
     }
 
     /// <summary>
-    /// 通知を受け取る
+    /// 破壊されたオブジェクトの通知を受け取る
     /// </summary>
     /// <param name="value"></param>
     public void Notify(object value)

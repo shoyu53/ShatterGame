@@ -6,8 +6,8 @@ using UnityEngine;
 public class DestructibleEquip :MonoBehaviour,IObservable,IGetEquipStatus
 {
     [SerializeField] private string _objectName;
-    [SerializeField] private string _price;
-    [SerializeField] private float _hp;
+    [SerializeField] private int _price;
+    [SerializeField] private int _hp;
     [SerializeField] private ushort _id;
 
     //GameManagerから代入、プレイヤーが装備している武器を装備
@@ -67,9 +67,10 @@ public class DestructibleEquip :MonoBehaviour,IObservable,IGetEquipStatus
         if (collision.gameObject==_weaponObj)
         {
             Damage(_weapon.GetAttack());
+
             if (_hp <= 0)
             {
-                NotifyObserver();
+                NotifyObserver();//壊れたことを通知
             }
         }
     }
