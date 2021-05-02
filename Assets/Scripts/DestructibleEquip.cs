@@ -47,15 +47,25 @@ public class DestructibleEquip :MonoBehaviour,IObservable,IGetEquipStatus
         }
     }
 
+    /// <summary>
+    /// 全ステータスを取得
+    /// </summary>
+    /// <returns></returns>
     public EquipStatus GetStatus()
     {
        return new EquipStatus(_objectName, _price, _hp, _id);
     }
 
+
+    /// <summary>
+    /// ダメージをくらったタイミングでのみ呼び出す
+    /// </summary>
+    /// <param name="attack"></param>
     private void Damage(int attack)
     {
         _hp -= attack;
     }
+
 
     void Start()
     {
@@ -63,7 +73,10 @@ public class DestructibleEquip :MonoBehaviour,IObservable,IGetEquipStatus
     }
 
     private void OnCollisionEnter(Collision collision)
-    { 
+    {
+        //攻撃するたびに武器側から破壊対象物(これ)をGetComponentせずに、
+        //破壊対象物側に共通(static)で武器を持たせて、破壊対象物でダメージ処理を行う
+        //GetComponent回数削減
         if (collision.gameObject==_weaponObj)
         {
             Damage(_weapon.GetAttack());
@@ -74,4 +87,6 @@ public class DestructibleEquip :MonoBehaviour,IObservable,IGetEquipStatus
             }
         }
     }
+
+
 }
